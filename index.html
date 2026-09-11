@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DYLAN Support Center — technical support in multiple languages.">
+<title>DYLAN Support Center</title>
+<style>
+:root{
+  --bg:#f7f9fc;--surface:#fff;--surface-2:#f1f5fb;--text:#15213b;
+  --muted:#66728a;--line:#dfe6f1;--primary:#3978ff;--primary-2:#6c5cff;
+  --primary-soft:#edf3ff;--shadow:0 16px 45px rgba(36,66,120,.10);--radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+  "Microsoft YaHei",Roboto,Arial,sans-serif;color:var(--text);line-height:1.6;
+  background:radial-gradient(circle at 82% 8%,rgba(91,121,255,.12),transparent 28%),
+  radial-gradient(circle at 8% 35%,rgba(86,190,255,.08),transparent 24%),var(--bg);
+}
+a{text-decoration:none;color:inherit}.container{width:min(1180px,calc(100% - 40px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(223,230,241,.8)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:.08em}
+.logo-mark{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-2));transform:rotate(45deg);position:relative;box-shadow:0 7px 20px rgba(57,120,255,.25)}
+.logo-mark:after{content:"";position:absolute;inset:7px;border-radius:5px;background:#fff;opacity:.95}
+.nav-links{display:flex;gap:34px;color:#56627a;font-size:14px}.nav-links a:hover{color:var(--primary)}
+.nav-actions{display:flex;gap:12px;align-items:center}.search-mini{font-size:20px;color:#536078}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:650;font-size:14px;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(50,80,130,.10)}
+.btn-primary{border:0;color:#fff;background:linear-gradient(100deg,var(--primary),var(--primary-2));box-shadow:0 10px 24px rgba(74,102,235,.22)}
+.lang-switch{position:relative}
+.lang-switch select{
+  appearance:none;-webkit-appearance:none;
+  padding:9px 34px 9px 14px;
+  font-size:13px;font-weight:650;color:#56627a;
+  background:#f8faff;border:1px solid var(--line);
+  border-radius:999px;cursor:pointer;outline:none;
+  transition:.2s;
+  font-family:inherit;
+}
+.lang-switch select:hover{border-color:#c8d6ef;box-shadow:0 4px 12px rgba(50,80,130,.08)}
+.lang-switch select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(57,120,255,.12)}
+.lang-switch:after{
+  content:"▾";position:absolute;right:14px;top:50%;
+  transform:translateY(-50%);pointer-events:none;
+  color:#71809a;font-size:11px;
+}
+.hero{padding:94px 0 62px;text-align:center;position:relative;overflow:hidden}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--primary)}
+h1{font-size:clamp(42px,6vw,72px);line-height:1.04;margin:14px 0 20px;letter-spacing:-.045em}
+.gradient-text{background:linear-gradient(100deg,#3978ff,#765bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:650px;margin:0 auto;color:var(--muted);font-size:18px}
+.search-box{max-width:720px;margin:34px auto 18px;padding:7px;display:flex;align-items:center;background:#fff;border:1px solid #d9e2ef;border-radius:18px;box-shadow:var(--shadow)}
+.search-box span{padding:0 15px;font-size:20px;color:#7b879b}.search-box input{flex:1;border:0;outline:0;font-size:15px;color:var(--text);background:transparent;padding:13px 0}
+.search-box button{width:48px;height:48px;border:0;border-radius:14px;color:#fff;background:linear-gradient(135deg,var(--primary),var(--primary-2));font-size:19px;cursor:pointer}
+.popular{font-size:13px;color:#7a8598}.popular a{color:var(--primary);margin-left:14px}
+.notice{display:none;padding:10px 15px;border-radius:10px;background:#edf3ff;color:#2868ed;font-size:13px;margin:10px auto;max-width:720px}
+.section{padding:64px 0}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:25px}
+.section-head h2{margin:5px 0 0;font-size:34px;letter-spacing:-.025em}.section-head a{color:var(--primary);font-size:14px;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 7px 25px rgba(45,71,115,.045);transition:.22s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c8d6ef}
+.icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);font-size:20px;margin-bottom:20px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:13px}.card .arrow{display:block;margin-top:18px;color:var(--primary);font-weight:800}
+.faq-wrap{display:grid;grid-template-columns:250px 1fr;gap:28px}.tabs{display:flex;flex-direction:column;gap:7px}
+.tab{padding:13px 16px;border-radius:13px;color:#617089;font-size:14px;cursor:pointer}.tab.active{background:#edf3ff;color:#2868ed;font-weight:750}
+.faq{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+details{border-bottom:1px solid var(--line);padding:0 23px}details:last-child{border-bottom:0}
+summary{list-style:none;cursor:pointer;padding:20px 0;font-weight:650;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}summary:after{content:"＋";color:#71809a;font-size:20px;font-weight:400}
+details[open] summary:after{content:"−"}.answer{padding:0 35px 20px 0;color:var(--muted);font-size:14px}
+.topics{background:#f0f4fa}.topic-card{min-height:205px}
+.contact{margin-top:10px;padding:38px;border-radius:24px;background:linear-gradient(120deg,#eef4ff,#f5f2ff);border:1px solid #d9e3f5;display:grid;grid-template-columns:1.1fr 1fr;gap:35px;align-items:center}
+.contact h2{margin:5px 0 10px;font-size:30px}.contact p{color:var(--muted);margin:0 0 22px}.contact-info{display:grid;gap:15px}
+.info{display:flex;gap:14px;align-items:center}.info-icon{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;color:var(--primary);border:1px solid #dfe7f3}
+.info small{display:block;color:#7b879a}.info strong{font-size:14px}
+footer{padding:42px 0 30px;border-top:1px solid var(--line);background:#fff}.footer-row{display:flex;justify-content:space-between;gap:30px;align-items:center}
+.footer-links{display:flex;gap:25px;color:#66728a;font-size:13px}.copyright{margin-top:28px;color:#98a2b2;font-size:12px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.faq-wrap{grid-template-columns:1fr}.tabs{flex-direction:row;overflow:auto}.tab{white-space:nowrap}.contact{grid-template-columns:1fr}.nav-links{display:none}}
+@media(max-width:600px){.container{width:min(100% - 28px,1180px)}.nav{height:64px}.nav-actions .btn{display:none}.hero{padding:65px 0 45px}h1{font-size:46px}.hero p{font-size:16px}.search-box{margin-top:26px}.popular a{display:inline-block;margin:6px 6px 0 0}.section{padding:45px 0}.section-head{align-items:start}.section-head h2{font-size:28px}.cards{grid-template-columns:1fr}.contact{padding:27px 22px}.footer-row{flex-direction:column;align-items:flex-start}.footer-links{flex-wrap:wrap;gap:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="#home" class="logo"><span class="logo-mark"></span>DYLAN</a>
+    <nav class="nav-links">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#help" data-i18n="nav.help">Help Center</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <span class="search-mini">⌕</span>
+      <div class="lang-switch">
+        <select id="langSelect" aria-label="Language">
+          <option value="en">English</option>
+          <option value="zh">简体中文</option>
+          <option value="zh-TW">繁體中文</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Technical Support</div>
+    <h1><span data-i18n="hero.title">How can we</span> <span class="gradient-text" data-i18n="hero.help">help?</span></h1>
+    <p data-i18n="hero.desc">Find answers, troubleshoot issues, and get the support you need — all in one place.</p>
+    <form class="search-box" id="searchForm">
+      <span>⌕</span>
+      <input id="searchInput" aria-label="Search support" data-i18n-placeholder="hero.placeholder" placeholder="Search for a solution..." autocomplete="off">
+      <button type="submit">→</button>
+    </form>
+    <div class="notice" id="notice"></div>
+    <div class="popular"><span data-i18n="hero.popular">Popular searches:</span>
+      <a href="#faq" data-i18n="search.login">Login issue</a>
+      <a href="#faq" data-i18n="search.subscription">Subscription</a>
+      <a href="#help" data-i18n="search.features">App features</a>
+      <a href="#faq" data-i18n="search.errors">Fix errors</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="help">
+<div class="container">
+  <div class="cards">
+    <a class="card" href="#faq"><div class="icon">♙</div><h3 data-i18n="cat.account.title">Account & Login</h3><p data-i18n="cat.account.desc">Sign in, create an account, reset password.</p><span class="arrow" data-i18n="common.explore">Explore →</span></a>
+    <a class="card" href="#faq"><div class="icon">▣</div><h3 data-i18n="cat.billing.title">Subscription & Billing</h3><p data-i18n="cat.billing.desc">Plans, payments, refunds and invoices.</p><span class="arrow" data-i18n="common.explore">Explore →</span></a>
+    <a class="card" href="#faq"><div class="icon">▦</div><h3 data-i18n="cat.features.title">App Features</h3><p data-i18n="cat.features.desc">Learn how to use our key features.</p><span class="arrow" data-i18n="common.explore">Explore →</span></a>
+    <a class="card" href="#faq"><div class="icon">⌁</div><h3 data-i18n="cat.trouble.title">Troubleshooting</h3><p data-i18n="cat.trouble.desc">Fix common issues and app errors.</p><span class="arrow" data-i18n="common.explore">Explore →</span></a>
+  </div>
+</div>
+</section>
+
+<section class="section" id="faq">
+<div class="container">
+  <div class="section-head">
+    <div><div class="eyebrow" data-i18n="faq.eyebrow">Frequently Asked Questions</div><h2 data-i18n="faq.title">Popular FAQs</h2></div>
+    <a href="#faq" data-i18n="faq.all">View all FAQs →</a>
+  </div>
+  <div class="faq-wrap">
+    <div class="tabs">
+      <div class="tab active" data-i18n="tab.account">Account & Login</div>
+      <div class="tab" data-i18n="tab.billing">Subscription & Billing</div>
+      <div class="tab" data-i18n="tab.features">App Features</div>
+      <div class="tab" data-i18n="tab.trouble">Troubleshooting</div>
+      <div class="tab" data-i18n="tab.security">Privacy & Security</div>
+    </div>
+    <div class="faq" id="faqList">
+      <details open><summary data-i18n="q1">How do I reset my password?</summary><div class="answer" data-i18n="a1">Go to the login page and select "Forgot password?". Enter your email address and follow the instructions sent to your inbox.</div></details>
+      <details><summary data-i18n="q2">How do I create an account?</summary><div class="answer" data-i18n="a2">Select "Sign Up" and enter your email address. Follow the verification steps to complete your account setup.</div></details>
+      <details><summary data-i18n="q3">Can I change my email address?</summary><div class="answer" data-i18n="a3">Yes. Open Account Settings, choose your email address, and complete the verification process for the new address.</div></details>
+      <details><summary data-i18n="q4">Why am I not receiving the verification code?</summary><div class="answer" data-i18n="a4">Check your spam or junk folder first. If the code still does not arrive, request a new code after a few minutes or contact support.</div></details>
+      <details><summary data-i18n="q5">How do I cancel my subscription?</summary><div class="answer" data-i18n="a5">Open Subscription & Billing in your account settings and follow the cancellation instructions for your current plan.</div></details>
+      <details><summary data-i18n="q6">The app is not working correctly. What should I do?</summary><div class="answer" data-i18n="a6">Restart the app, make sure you have the latest version installed, and check your internet connection. If the issue continues, contact support with details of the problem.</div></details>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section topics">
+<div class="container">
+  <div class="section-head"><div><div class="eyebrow" data-i18n="topics.eyebrow">Get Help Faster</div><h2 data-i18n="topics.title">Explore Help Topics</h2></div></div>
+  <div class="cards">
+    <div class="card topic-card"><div class="icon">✦</div><h3 data-i18n="topic.start.title">Getting Started</h3><p data-i18n="topic.start.desc">Set up your account, explore key features, and get up and running quickly.</p><span class="arrow" data-i18n="common.learn">Learn more →</span></div>
+    <div class="card topic-card"><div class="icon">⚙</div><h3 data-i18n="topic.trouble.title">Troubleshooting</h3><p data-i18n="topic.trouble.desc">Resolve common issues, fix errors, and get your app back on track.</p><span class="arrow" data-i18n="common.learn">Learn more →</span></div>
+    <div class="card topic-card"><div class="icon">◇</div><h3 data-i18n="topic.security.title">Account & Security</h3><p data-i18n="topic.security.desc">Manage your account, protect your data, and keep your information safe.</p><span class="arrow" data-i18n="common.learn">Learn more →</span></div>
+    <div class="card topic-card"><div class="icon">▤</div><h3 data-i18n="topic.billing.title">Billing & Subscription</h3><p data-i18n="topic.billing.desc">View your plan, manage payments, and handle refunds.</p><span class="arrow" data-i18n="common.learn">Learn more →</span></div>
+  </div>
+
+  <div class="contact" id="contact">
+    <div>
+      <div class="eyebrow" data-i18n="contact.eyebrow">Still Need Help?</div>
+      <h2 data-i18n="contact.title">Contact Our Support Team</h2>
+      <p data-i18n="contact.desc">Our team is here to help. Reach out and we'll get back to you as soon as possible.</p>
+      <a class="btn btn-primary" href="mailto:lukystar2823@outlook.com" data-i18n="contact.emailBtn">✉ Send us an email</a>
+    </div>
+    <div class="contact-info">
+      <div class="info"><div class="info-icon">✉</div><div><small data-i18n="contact.emailLabel">Email</small><strong>lukystar2823@outlook.com</strong></div></div>
+      <div class="info"><div class="info-icon">⌕</div><div><small data-i18n="contact.phoneLabel">Phone</small><strong>+8618929575128</strong></div></div>
+      <div class="info"><div class="info-icon">◷</div><div><small data-i18n="contact.hoursLabel">Support Hours</small><strong data-i18n="contact.hours">Mon – Fri, 9:00 AM – 6:00 PM (PST)</strong></div></div>
+    </div>
+  </div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+  <div class="footer-row">
+    <div class="logo"><span class="logo-mark"></span>DYLAN</div>
+    <div class="footer-links"><a href="#" data-i18n="footer.privacy">Privacy Policy</a><a href="#" data-i18n="footer.terms">Terms of Service</a><a href="#contact" data-i18n="nav.contact">Contact</a></div>
+  </div>
+  <div class="copyright" data-i18n="footer.copy">© 2026 DYLAN. All rights reserved.</div>
+</div>
+</footer>
+
+<script>
+const translations = {
+  en: {
+    "nav.home":"Home","nav.help":"Help Center","nav.faq":"FAQ","nav.contact":"Contact","nav.signin":"Sign In",
+    "hero.eyebrow":"Technical Support","hero.title":"How can we","hero.help":"help?","hero.desc":"Find answers, troubleshoot issues, and get the support you need — all in one place.",
+    "hero.placeholder":"Search for a solution...","hero.popular":"Popular searches:","search.login":"Login issue","search.subscription":"Subscription","search.features":"App features","search.errors":"Fix errors",
+    "cat.account.title":"Account & Login","cat.account.desc":"Sign in, create an account, reset password.",
+    "cat.billing.title":"Subscription & Billing","cat.billing.desc":"Plans, payments, refunds and invoices.",
+    "cat.features.title":"App Features","cat.features.desc":"Learn how to use our key features.",
+    "cat.trouble.title":"Troubleshooting","cat.trouble.desc":"Fix common issues and app errors.","common.explore":"Explore →","common.learn":"Learn more →",
+    "faq.eyebrow":"Frequently Asked Questions","faq.title":"Popular FAQs","faq.all":"View all FAQs →",
+    "tab.account":"Account & Login","tab.billing":"Subscription & Billing","tab.features":"App Features","tab.trouble":"Troubleshooting","tab.security":"Privacy & Security",
+    "q1":"How do I reset my password?","a1":"Go to the login page and select 'Forgot password?'. Enter your email address and follow the instructions sent to your inbox.",
+    "q2":"How do I create an account?","a2":"Select 'Sign Up' and enter your email address. Follow the verification steps to complete your account setup.",
+    "q3":"Can I change my email address?","a3":"Yes. Open Account Settings, choose your email address, and complete the verification process for the new address.",
+    "q4":"Why am I not receiving the verification code?","a4":"Check your spam or junk folder first. If the code still does not arrive, request a new code after a few minutes or contact support.",
+    "q5":"How do I cancel my subscription?","a5":"Open Subscription & Billing in your account settings and follow the cancellation instructions for your current plan.",
+    "q6":"The app is not working correctly. What should I do?","a6":"Restart the app, make sure you have the latest version installed, and check your internet connection. If the issue continues, contact support with details of the problem.",
+    "topics.eyebrow":"Get Help Faster","topics.title":"Explore Help Topics",
+    "topic.start.title":"Getting Started","topic.start.desc":"Set up your account, explore key features, and get up and running quickly.",
+    "topic.trouble.title":"Troubleshooting","topic.trouble.desc":"Resolve common issues, fix errors, and get your app back on track.",
+    "topic.security.title":"Account & Security","topic.security.desc":"Manage your account, protect your data, and keep your information safe.",
+    "topic.billing.title":"Billing & Subscription","topic.billing.desc":"View your plan, manage payments, and handle refunds.",
+    "contact.eyebrow":"Still Need Help?","contact.title":"Contact Our Support Team","contact.desc":"Our team is here to help. Reach out and we'll get back to you as soon as possible.",
+    "contact.emailBtn":"✉ Send us an email","contact.emailLabel":"Email","contact.phoneLabel":"Phone","contact.hoursLabel":"Support Hours","contact.hours":"Mon – Fri, 9:00 AM – 6:00 PM (PST)",
+    "footer.privacy":"Privacy Policy","footer.terms":"Terms of Service","footer.copy":"© 2026 DYLAN. All rights reserved.",
+    "notice.found":"{n} relevant result{plural} found in FAQ.","notice.none":"No exact FAQ found. Please contact our support team."
+  },
+  zh: {
+    "nav.home":"首页","nav.help":"帮助中心","nav.faq":"常见问题","nav.contact":"联系我们","nav.signin":"登录",
+    "hero.eyebrow":"技术支持","hero.title":"有什么可以","hero.help":"帮助您？","hero.desc":"查找答案、排查问题，快速获得您需要的支持。",
+    "hero.placeholder":"搜索您遇到的问题...","hero.popular":"热门搜索：","search.login":"登录问题","search.subscription":"订阅服务","search.features":"应用功能","search.errors":"故障排查",
+    "cat.account.title":"账户与登录","cat.account.desc":"登录、创建账户、重置密码。",
+    "cat.billing.title":"订阅与账单","cat.billing.desc":"套餐、付款、退款和账单。",
+    "cat.features.title":"应用功能","cat.features.desc":"了解如何使用我们的主要功能。",
+    "cat.trouble.title":"故障排查","cat.trouble.desc":"解决常见问题和应用错误。","common.explore":"查看 →","common.learn":"了解更多 →",
+    "faq.eyebrow":"常见问题","faq.title":"热门 FAQ","faq.all":"查看全部 FAQ →",
+    "tab.account":"账户与登录","tab.billing":"订阅与账单","tab.features":"应用功能","tab.trouble":"故障排查","tab.security":"隐私与安全",
+    "q1":"如何重置密码？","a1":"进入登录页面，点击“忘记密码？”，输入您的邮箱地址，然后按照邮件中的说明完成密码重置。",
+    "q2":"如何创建账户？","a2":"点击“注册”，输入您的邮箱地址，并按照验证步骤完成账户创建。",
+    "q3":"可以更改账户邮箱吗？","a3":"可以。进入“账户设置”，选择邮箱地址，并完成新邮箱的验证流程。",
+    "q4":"为什么收不到验证码？","a4":"请先检查垃圾邮件或广告邮件文件夹。如果仍未收到，请等待几分钟后重新获取验证码，或联系客服。",
+    "q5":"如何取消订阅？","a5":"进入账户设置中的“订阅与账单”，按照当前套餐对应的取消流程操作即可。",
+    "q6":"应用运行异常怎么办？","a6":"请尝试重启应用，确认已安装最新版本，并检查网络连接。如果问题仍然存在，请联系客服并提供详细的问题描述。",
+    "topics.eyebrow":"更快获得帮助","topics.title":"浏览帮助主题",
+    "topic.start.title":"快速开始","topic.start.desc":"设置账户、了解核心功能，快速开始使用。",
+    "topic.trouble.title":"故障排查","topic.trouble.desc":"解决常见问题和错误，让应用恢复正常运行。",
+    "topic.security.title":"账户与安全","topic.security.desc":"管理账户、保护数据，确保您的信息安全。",
+    "topic.billing.title":"账单与订阅","topic.billing.desc":"查看套餐、管理付款以及处理退款。",
+    "contact.eyebrow":"仍需要帮助？","contact.title":"联系我们的支持团队","contact.desc":"我们的团队随时为您提供帮助。联系我们，我们会尽快回复您。",
+    "contact.emailBtn":"✉ 发送邮件","contact.emailLabel":"邮箱","contact.phoneLabel":"电话","contact.hoursLabel":"服务时间","contact.hours":"周一至周五，9:00 AM – 6:00 PM（PST）",
+    "footer.privacy":"隐私政策","footer.terms":"服务条款","footer.copy":"© 2026 DYLAN。保留所有权利。",
+    "notice.found":"FAQ 中找到 {n} 个相关结果。","notice.none":"没有找到完全匹配的 FAQ，请联系我们的支持团队。"
+  },
+  "zh-TW": {
+    "nav.home":"首頁","nav.help":"幫助中心","nav.faq":"常見問題","nav.contact":"聯絡我們","nav.signin":"登入",
+    "hero.eyebrow":"技術支援","hero.title":"有什麼可以","hero.help":"幫助您？","hero.desc":"尋找答案、排查問題，快速獲得您需要的支援。",
+    "hero.placeholder":"搜尋您遇到的問題...","hero.popular":"熱門搜尋：","search.login":"登入問題","search.subscription":"訂閱服務","search.features":"應用功能","search.errors":"故障排查",
+    "cat.account.title":"帳戶與登入","cat.account.desc":"登入、建立帳戶、重設密碼。",
+    "cat.billing.title":"訂閱與帳單","cat.billing.desc":"方案、付款、退款和帳單。",
+    "cat.features.title":"應用功能","cat.features.desc":"了解如何使用我們的主要功能。",
+    "cat.trouble.title":"故障排查","cat.trouble.desc":"解決常見問題和應用錯誤。","common.explore":"查看 →","common.learn":"了解更多 →",
+    "faq.eyebrow":"常見問題","faq.title":"熱門 FAQ","faq.all":"查看全部 FAQ →",
+    "tab.account":"帳戶與登入","tab.billing":"訂閱與帳單","tab.features":"應用功能","tab.trouble":"故障排查","tab.security":"隱私與安全",
+    "q1":"如何重設密碼？","a1":"進入登入頁面，點擊「忘記密碼？」，輸入您的電子郵件地址，然後按照郵件中的說明完成密碼重設。",
+    "q2":"如何建立帳戶？","a2":"點擊「註冊」，輸入您的電子郵件地址，並按照驗證步驟完成帳戶建立。",
+    "q3":"可以更改帳戶電子郵件嗎？","a3":"可以。進入「帳戶設定」，選擇電子郵件地址，並完成新電子郵件的驗證流程。",
+    "q4":"為什麼收不到驗證碼？","a4":"請先檢查垃圾郵件或廣告郵件資料夾。如果仍未收到，請等待幾分鐘後重新取得驗證碼，或聯絡客服。",
+    "q5":"如何取消訂閱？","a5":"進入帳戶設定中的「訂閱與帳單」，按照目前方案對應的取消流程操作即可。",
+    "q6":"應用程式執行異常怎麼辦？","a6":"請嘗試重新啟動應用程式，確認已安裝最新版本，並檢查網路連線。如果問題仍然存在，請聯絡客服並提供詳細的問題描述。",
+    "topics.eyebrow":"更快獲得協助","topics.title":"瀏覽幫助主題",
+    "topic.start.title":"快速開始","topic.start.desc":"設定帳戶、了解核心功能，快速開始使用。",
+    "topic.trouble.title":"故障排查","topic.trouble.desc":"解決常見問題和錯誤，讓應用程式恢復正常運作。",
+    "topic.security.title":"帳戶與安全","topic.security.desc":"管理帳戶、保護資料，確保您的資訊安全。",
+    "topic.billing.title":"帳單與訂閱","topic.billing.desc":"查看方案、管理付款以及處理退款。",
+    "contact.eyebrow":"仍需要協助？","contact.title":"聯絡我們的支援團隊","contact.desc":"我們的團隊隨時為您提供協助。聯絡我們，我們會盡快回覆您。",
+    "contact.emailBtn":"✉ 傳送郵件","contact.emailLabel":"電子郵件","contact.phoneLabel":"電話","contact.hoursLabel":"服務時間","contact.hours":"週一至週五，9:00 AM – 6:00 PM（PST）",
+    "footer.privacy":"隱私政策","footer.terms":"服務條款","footer.copy":"© 2026 DYLAN。保留所有權利。",
+    "notice.found":"在 FAQ 中找到 {n} 個相關結果。","notice.none":"沒有找到完全符合的 FAQ，請聯絡我們的支援團隊。"
+  },
+  ja: {
+    "nav.home":"ホーム","nav.help":"ヘルプセンター","nav.faq":"よくある質問","nav.contact":"お問い合わせ","nav.signin":"ログイン",
+    "hero.eyebrow":"テクニカルサポート","hero.title":"どのような","hero.help":"ご用件でしょうか？","hero.desc":"回答の検索、問題のトラブルシューティング、必要なサポートをすべてここで。",
+    "hero.placeholder":"解決策を検索...","hero.popular":"人気の検索:","search.login":"ログインの問題","search.subscription":"サブスクリプション","search.features":"アプリの機能","search.errors":"エラーの修正",
+    "cat.account.title":"アカウントとログイン","cat.account.desc":"サインイン、アカウント作成、パスワードのリセット。",
+    "cat.billing.title":"サブスクリプションと請求","cat.billing.desc":"プラン、支払い、返金、請求書。",
+    "cat.features.title":"アプリの機能","cat.features.desc":"主要な機能の使い方を学びましょう。",
+    "cat.trouble.title":"トラブルシューティング","cat.trouble.desc":"よくある問題とアプリのエラーを解決します。","common.explore":"詳しく見る →","common.learn":"もっと見る →",
+    "faq.eyebrow":"よくある質問","faq.title":"人気のFAQ","faq.all":"すべてのFAQを見る →",
+    "tab.account":"アカウントとログイン","tab.billing":"サブスクリプションと請求","tab.features":"アプリの機能","tab.trouble":"トラブルシューティング","tab.security":"プライバシーとセキュリティ",
+    "q1":"パスワードをリセットするには？","a1":"ログインページで「パスワードをお忘れですか？」を選択してください。メールアドレスを入力し、受信トレイに届いた手順に従ってください。",
+    "q2":"アカウントを作成するには？","a2":"「新規登録」を選択し、メールアドレスを入力してください。認証手順に従ってアカウントの設定を完了してください。",
+    "q3":"メールアドレスを変更できますか？","a3":"はい。アカウント設定を開き、メールアドレスを選択し、新しいアドレスの認証プロセスを完了してください。",
+    "q4":"認証コードが届かないのはなぜですか？","a4":"まず迷惑メールフォルダを確認してください。それでも届かない場合は、数分後に新しいコードをリクエストするか、サポートにお問い合わせください。",
+    "q5":"サブスクリプションをキャンセルするには？","a5":"アカウント設定の「サブスクリプションと請求」を開き、現在のプランのキャンセル手順に従ってください。",
+    "q6":"アプリが正常に動作しません。どうすればよいですか？","a6":"アプリを再起動し、最新バージョンがインストールされていることを確認し、インターネット接続を確認してください。問題が続く場合は、詳細を添えてサポートにお問い合わせください。",
+    "topics.eyebrow":"より迅速なサポート","topics.title":"ヘルプトピックを探す",
+    "topic.start.title":"はじめに","topic.start.desc":"アカウントを設定し、主要な機能を確認して、すぐに使い始めましょう。",
+    "topic.trouble.title":"トラブルシューティング","topic.trouble.desc":"よくある問題やエラーを解決し、アプリを正常に戻します。",
+    "topic.security.title":"アカウントとセキュリティ","topic.security.desc":"アカウントを管理し、データを保護し、情報を安全に保ちます。",
+    "topic.billing.title":"請求とサブスクリプション","topic.billing.desc":"プランの確認、支払いの管理、返金の処理。",
+    "contact.eyebrow":"まだお困りですか？","contact.title":"サポートチームにお問い合わせ","contact.desc":"私たちのチームがお手伝いします。お気軽にご連絡ください。できるだけ早く返信いたします。",
+    "contact.emailBtn":"✉ メールを送る","contact.emailLabel":"メール","contact.phoneLabel":"電話","contact.hoursLabel":"サポート時間","contact.hours":"月〜金 9:00 AM – 6:00 PM (PST)",
+    "footer.privacy":"プライバシーポリシー","footer.terms":"利用規約","footer.copy":"© 2026 DYLAN. All rights reserved.",
+    "notice.found":"FAQ で {n} 件の関連結果が見つかりました。","notice.none":"一致する FAQ が見つかりませんでした。サポートチームにお問い合わせください。"
+  },
+  ko: {
+    "nav.home":"홈","nav.help":"도움말 센터","nav.faq":"자주 묻는 질문","nav.contact":"문의하기","nav.signin":"로그인",
+    "hero.eyebrow":"기술 지원","hero.title":"무엇을","hero.help":"도와드릴까요?","hero.desc":"답변을 찾고, 문제를 해결하고, 필요한 지원을 한 곳에서 받아보세요.",
+    "hero.placeholder":"해결책을 검색하세요...","hero.popular":"인기 검색어:","search.login":"로그인 문제","search.subscription":"구독","search.features":"앱 기능","search.errors":"오류 해결",
+    "cat.account.title":"계정 및 로그인","cat.account.desc":"로그인, 계정 생성, 비밀번호 재설정.",
+    "cat.billing.title":"구독 및 결제","cat.billing.desc":"요금제, 결제, 환불 및 청구서.",
+    "cat.features.title":"앱 기능","cat.features.desc":"주요 기능 사용 방법을 알아보세요.",
+    "cat.trouble.title":"문제 해결","cat.trouble.desc":"일반적인 문제와 앱 오류를 해결합니다.","common.explore":"살펴보기 →","common.learn":"더 알아보기 →",
+    "faq.eyebrow":"자주 묻는 질문","faq.title":"인기 FAQ","faq.all":"모든 FAQ 보기 →",
+    "tab.account":"계정 및 로그인","tab.billing":"구독 및 결제","tab.features":"앱 기능","tab.trouble":"문제 해결","tab.security":"개인정보 및 보안",
+    "q1":"비밀번호를 어떻게 재설정하나요?","a1":"로그인 페이지에서 '비밀번호를 잊으셨나요?'를 선택하세요. 이메일 주소를 입력하고 받은 편지함으로 전송된 지침을 따르세요.",
+    "q2":"계정을 어떻게 만드나요?","a2":"'회원가입'을 선택하고 이메일 주소를 입력하세요. 인증 단계에 따라 계정 설정을 완료하세요.",
+    "q3":"이메일 주소를 변경할 수 있나요?","a3":"네. 계정 설정을 열고 이메일 주소를 선택한 후 새 주소에 대한 인증 절차를 완료하세요.",
+    "q4":"인증 코드를 받지 못하는 이유는 무엇인가요?","a4":"먼저 스팸 또는 정크 폴더를 확인하세요. 그래도 도착하지 않으면 몇 분 후 새 코드를 요청하거나 지원팀에 문의하세요.",
+    "q5":"구독을 어떻게 취소하나요?","a5":"계정 설정의 '구독 및 결제'를 열고 현재 요금제에 대한 취소 안내를 따르세요.",
+    "q6":"앱이 제대로 작동하지 않습니다. 어떻게 해야 하나요?","a6":"앱을 다시 시작하고 최신 버전이 설치되어 있는지 확인하고 인터넷 연결을 확인하세요. 문제가 계속되면 문제에 대한 세부 정보와 함께 지원팀에 문의하세요.",
+    "topics.eyebrow":"더 빠른 도움 받기","topics.title":"도움말 주제 살펴보기",
+    "topic.start.title":"시작하기","topic.start.desc":"계정을 설정하고 주요 기능을 살펴보고 빠르게 시작하세요.",
+    "topic.trouble.title":"문제 해결","topic.trouble.desc":"일반적인 문제와 오류를 해결하고 앱을 정상 상태로 되돌립니다.",
+    "topic.security.title":"계정 및 보안","topic.security.desc":"계정을 관리하고 데이터를 보호하며 정보를 안전하게 유지하세요.",
+    "topic.billing.title":"결제 및 구독","topic.billing.desc":"요금제를 확인하고 결제를 관리하며 환불을 처리하세요.",
+    "contact.eyebrow":"아직 도움이 필요하신가요?","contact.title":"지원팀에 문의하세요","contact.desc":"저희 팀이 도와드리겠습니다. 연락 주시면 최대한 빨리 답변드리겠습니다.",
+    "contact.emailBtn":"✉ 이메일 보내기","contact.emailLabel":"이메일","contact.phoneLabel":"전화","contact.hoursLabel":"지원 시간","contact.hours":"월–금, 오전 9:00 – 오후 6:00 (PST)",
+    "footer.privacy":"개인정보 처리방침","footer.terms":"서비스 약관","footer.copy":"© 2026 DYLAN. All rights reserved.",
+    "notice.found":"FAQ에서 {n}개의 관련 결과를 찾았습니다.","notice.none":"일치하는 FAQ를 찾을 수 없습니다. 지원팀에 문의해 주세요."
+  }
+};
+
+const langMeta = {
+  "en":{htmlLang:"en",title:"DYLAN Support Center"},
+  "zh":{htmlLang:"zh-CN",title:"DYLAN 技术支持中心"},
+  "zh-TW":{htmlLang:"zh-TW",title:"DYLAN 技術支援中心"},
+  "ja":{htmlLang:"ja",title:"DYLAN サポートセンター"},
+  "ko":{htmlLang:"ko",title:"DYLAN 지원 센터"}
+};
+
+let currentLang = localStorage.getItem("novaLang") || "en";
+if(!translations[currentLang]) currentLang = "en";
+
+const input = document.getElementById("searchInput");
+const notice = document.getElementById("notice");
+const details = [...document.querySelectorAll("#faqList details")];
+const langSelect = document.getElementById("langSelect");
+
+function applyLanguage(lang){
+  if(!translations[lang]) lang = "en";
+  currentLang = lang;
+  const meta = langMeta[lang];
+  document.documentElement.lang = meta.htmlLang;
+  document.title = meta.title;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.dataset.i18n;
+    if(translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    el.placeholder = translations[lang][el.dataset.i18nPlaceholder];
+  });
+  langSelect.value = lang;
+  localStorage.setItem("novaLang", lang);
+  if(input.value.trim()) runSearch(false);
+}
+
+function runSearch(scroll=true){
+  const q = input.value.trim().toLowerCase();
+  if(!q){
+    details.forEach(d=>d.style.display="block");
+    notice.style.display="none";
+    return;
+  }
+  let found = 0;
+  details.forEach(d=>{
+    const text = d.innerText.toLowerCase();
+    const match = text.includes(q);
+    d.style.display = match ? "block" : "none";
+    if(match){ d.open = true; found++; }
+  });
+  const t = translations[currentLang];
+  notice.textContent = found
+    ? t["notice.found"].replace("{n}", found).replace("{plural}", found > 1 ? "s" : "")
+    : t["notice.none"];
+  notice.style.display = "block";
+  if(scroll) document.getElementById("faq").scrollIntoView({behavior:"smooth"});
+}
+
+langSelect.addEventListener("change", ()=>applyLanguage(langSelect.value));
+document.getElementById("searchForm").addEventListener("submit", e=>{e.preventDefault();runSearch(true)});
+input.addEventListener("input", ()=>{
+  if(!input.value.trim()){
+    details.forEach(d=>d.style.display="block");
+    notice.style.display="none";
+  }
+});
+
+// FAQ category tabs: simple guided filtering by keyword/category.
+const tabMap = [
+  {en:"Account & Login", zh:"账户与登录", tw:"帳戶與登入", ja:"アカウントとログイン", ko:"계정 및 로그인",
+   keywords:["password","account","email","账户","密码","邮箱","帳戶","密碼","電子郵件","アカウント","パスワード","メール","계정","비밀번호","이메일"]},
+  {en:"Subscription & Billing", zh:"订阅与账单", tw:"訂閱與帳單", ja:"サブスクリプションと請求", ko:"구독 및 결제",
+   keywords:["subscription","billing","cancel","payment","订阅","账单","取消","付款","訂閱","帳單","サブスクリプション","請求","キャンセル","구독","결제","취소"]},
+  {en:"App Features", zh:"应用功能", tw:"應用功能", ja:"アプリの機能", ko:"앱 기능",
+   keywords:["feature","features","功能","使用","機能","기능"]},
+  {en:"Troubleshooting", zh:"故障排查", tw:"故障排查", ja:"トラブルシューティング", ko:"문제 해결",
+   keywords:["working","error","code","problem","故障","错误","验证码","问题","錯誤","驗證碼","エラー","問題","오류","문제"]},
+  {en:"Privacy & Security", zh:"隐私与安全", tw:"隱私與安全", ja:"プライバシーとセキュリティ", ko:"개인정보 및 보안",
+   keywords:["security","privacy","安全","隐私","隱私","セキュリティ","プライバシー","보안","개인정보"]}
+];
+
+document.querySelectorAll(".tab").forEach((tab, index)=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    const keywords = tabMap[index].keywords;
+    details.forEach(d=>{
+      const text = d.innerText.toLowerCase();
+      d.style.display = keywords.some(k=>text.includes(k.toLowerCase())) ? "block" : "none";
+    });
+    document.getElementById("faq").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+});
+
+applyLanguage(currentLang);
+</script>
+</body>
+</html>
