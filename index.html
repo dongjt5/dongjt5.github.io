@@ -50,8 +50,30 @@
     box-shadow: 0 4px 12px rgba(57,120,255,.15);
   }
 
+  .nav-right { display: flex; align-items: center; gap: 28px; }
   .nav-links{display:flex;gap:28px;font-size:14px;color:#56627A}
   .nav-links a:hover{color:var(--primary)}
+
+  /* 语言切换按钮 */
+  .lang-switch {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lang-switch:hover {
+    border-color: #C9D8F0;
+    box-shadow: 0 4px 12px rgba(45,71,115,.08);
+    color: var(--primary);
+  }
 
   /* ---------- Carousel ---------- */
   .carousel-section{padding:40px 0 10px}
@@ -128,6 +150,18 @@
     display:block;
   }
 
+  /* 占位符特殊样式 */
+  .visual-card.placeholder {
+    border: 2px dashed #B8C9E5;
+    background: #F7F9FC;
+    color: #7E93B8;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 20px;
+  }
+
   /* arrows */
   .arrow{
     position:absolute;top:50%;transform:translateY(-50%);
@@ -171,10 +205,31 @@
     padding:24px;
     box-shadow:var(--shadow-sm);
     transition:.22s;
+    position: relative;
   }
   .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#C9D8F0}
   
-  /* 图标容器样式 */
+  /* 占位卡片的样式 */
+  .card.placeholder {
+    border: 2px dashed #B8C9E5;
+    background: #F7F9FC;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 240px;
+  }
+  .card.placeholder:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: #B8C9E5;
+  }
+  .card.placeholder h3 {
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+
   .icon{
     width:52px;height:52px;border-radius:14px;
     display:grid;place-items:center;
@@ -182,18 +237,8 @@
     border:1px solid #DCE7F8;
     color:var(--primary);font-size:22px;margin-bottom:18px;
   }
-  /* 当容器内有图片时，去掉背景和边框，让图片铺满 */
-  .icon.has-image {
-    background: transparent;
-    border: none;
-    overflow: hidden;
-  }
-  .icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: inherit;
-  }
+  .icon.has-image { background: transparent; border: none; overflow: hidden; }
+  .icon img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 
   .card h3{font-size:18px;margin-bottom:6px}
   .card p{color:var(--muted);font-size:14px;flex:1}
@@ -274,18 +319,20 @@
         <img src="assets/logo.png" alt="Dylan Studio" class="logo-mark">
         DYLAN STUDIO
       </a>
-      <div class="nav-links">
-        <a href="#featured">推荐</a>
-        <a href="#products">产品</a>
-        <a href="#closing">关于</a>
-        <a href="/support.html">支持</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#featured" data-i18n="nav.featured">推荐</a>
+          <a href="#products" data-i18n="nav.products">产品</a>
+          <a href="#closing" data-i18n="nav.about">关于</a>
+          <a href="/support.html" data-i18n="nav.support">支持</a>
+        </div>
+        <button class="lang-switch" id="langSwitch">EN</button>
       </div>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- 首屏：推荐产品轮播 -->
   <section class="carousel-section" id="featured">
     <div class="container">
       <div class="carousel" id="carousel">
@@ -299,36 +346,34 @@
     </div>
   </section>
 
-  <!-- 全部产品 -->
   <section class="section" id="products">
     <div class="container">
       <div class="section-head">
         <div>
-          <h2>全部产品</h2>
-          <p>持续更新中，欢迎体验。</p>
+          <h2 data-i18n="products.title">全部产品</h2>
+          <p data-i18n="products.desc">持续更新中，欢迎体验。</p>
         </div>
       </div>
       <div class="grid" id="productGrid"></div>
     </div>
   </section>
 
-  <!-- 收尾：企业宣言 + 关于 -->
   <section class="closing" id="closing">
     <div class="container">
       <div class="manifesto">
-        <h2>把复杂的事，<br><em>做得简单一点</em></h2>
-        <p>独立开发，持续打磨实用工具。每一款产品都围绕一个具体问题，保持克制、干净和长期可用。</p>
+        <h2><span data-i18n="manifesto.title1">把复杂的事，</span><br><em data-i18n="manifesto.title2">做得简单一点</em></h2>
+        <p data-i18n="manifesto.desc">独立开发，持续打磨实用工具。每一款产品都围绕一个具体问题，保持克制、干净和长期可用。</p>
       </div>
 
       <div class="about">
         <div>
-          <h2>关于</h2>
-          <p>专注于健康、效率与日常娱乐类产品。产品不追求堆功能，而是尽量把核心体验做顺、做稳。数据能留在本地的，就不上传；能一句说清的，就不绕弯。</p>
+          <h2 data-i18n="about.title">关于</h2>
+          <p data-i18n="about.desc">专注于健康、效率与日常娱乐类产品。产品不追求堆功能，而是尽量把核心体验做顺、做稳。数据能留在本地的，就不上传；能一句说清的，就不绕弯。</p>
         </div>
         <div class="about-points">
-          <div class="point"><b>✓</b> 独立开发，持续维护</div>
-          <div class="point"><b>✓</b> 重视隐私与数据最小化</div>
-          <div class="point"><b>✓</b> iOS 为主，逐步扩展平台</div>
+          <div class="point"><b>✓</b> <span data-i18n="about.point1">独立开发，持续维护</span></div>
+          <div class="point"><b>✓</b> <span data-i18n="about.point2">重视隐私与数据最小化</span></div>
+          <div class="point"><b>✓</b> <span data-i18n="about.point3">iOS 为主，逐步扩展平台</span></div>
         </div>
       </div>
     </div>
@@ -342,176 +387,323 @@
       DYLAN STUDIO
     </div>
     <div class="footer-links">
-      <a href="/privacy.html">隐私政策</a>
-      <a href="/terms.html">用户协议</a>
-      <a href="mailto:lukystar2823@outlook.com">联系</a>
+      <a href="/privacy.html" data-i18n="footer.privacy">隐私政策</a>
+      <a href="/terms.html" data-i18n="footer.terms">用户协议</a>
+      <a href="mailto:lukystar2823@outlook.com" data-i18n="footer.contact">联系</a>
     </div>
   </div>
   <div class="container" style="margin-top: 24px; color: #98a2b2; font-size: 12px;">
-    © 2026 Dylan Studio. All rights reserved.
+    <span data-i18n="footer.copy">© 2026 Dylan Studio. All rights reserved.</span>
   </div>
 </footer>
 
 <script>
-  /* ===== 推荐产品（轮播用） ===== */
-  const featured = [
-    {
-      name: "Dylan Health",
-      eyebrow: "推荐 · iOS",
-      desc: "AI 扫描食物与药品，给出清晰易懂的健康建议。数据尽量留在本地，只做真正有用的分析。",
-      primary: { label: "前往 App Store", href: "https://apps.apple.com/hk/app/dylan-health-food-scanner/id6805529950" },
-      secondary: { label: "了解更多", href: "#products" },
-      image: "assets/health.png", 
-      placeholder: "Product Screenshot"
+  // 多语言字典配置
+  const translations = {
+    zh: {
+      "nav.featured": "推荐", "nav.products": "产品", "nav.about": "关于", "nav.support": "支持",
+      "products.title": "全部产品", "products.desc": "持续更新中，欢迎体验。",
+      "manifesto.title1": "把复杂的事，", "manifesto.title2": "做得简单一点",
+      "manifesto.desc": "独立开发，持续打磨实用工具。每一款产品都围绕一个具体问题，保持克制、干净和长期可用。",
+      "about.title": "关于",
+      "about.desc": "专注于健康、效率与日常娱乐类产品。产品不追求堆功能，而是尽量把核心体验做顺、做稳。数据能留在本地的，就不上传；能一句说清的，就不绕弯。",
+      "about.point1": "独立开发，持续维护", "about.point2": "重视隐私与数据最小化", "about.point3": "iOS 为主，逐步扩展平台",
+      "footer.privacy": "隐私政策", "footer.terms": "用户协议", "footer.contact": "联系", "footer.copy": "© 2026 Dylan Studio. All rights reserved.",
+      "btn.appstore": "前往 App Store", "btn.learnmore": "了解更多",
+      "tag.featured_ios": "推荐 · iOS", "tag.coming_soon": "筹备中",
+      "placeholder.soon": "新产品即将上线"
     },
-    {
-      name: "产品 B",
-      eyebrow: "新品 · iOS",
-      desc: "一句话说明这款产品解决什么问题，以及它最值得被使用的理由。",
-      primary: { label: "查看详情", href: "/products/b.html" },
-      secondary: { label: "更多产品", href: "#products" },
-      image: "",
-      placeholder: "Product Screenshot"
-    },
-    {
-      name: "产品 C",
-      eyebrow: "即将上线 · Web",
-      desc: "一句话说明这款产品解决什么问题，以及它最值得被使用的理由。",
-      primary: { label: "了解进度", href: "#" },
-      secondary: { label: "更多产品", href: "#products" },
-      image: "",
-      placeholder: "Coming Soon"
+    en: {
+      "nav.featured": "Featured", "nav.products": "Products", "nav.about": "About", "nav.support": "Support",
+      "products.title": "All Products", "products.desc": "Continuously updating, welcome to explore.",
+      "manifesto.title1": "Making complex things,", "manifesto.title2": "a little simpler",
+      "manifesto.desc": "Indie developed, constantly refining practical tools. Each product focuses on a specific problem, remaining restrained, clean, and built to last.",
+      "about.title": "About",
+      "about.desc": "Focusing on health, productivity, and daily entertainment products. We don't stack features; instead, we strive to make the core experience smooth and stable. Data stays local if possible; if it can be explained in one sentence, we don't overcomplicate it.",
+      "about.point1": "Indie developed, continuously maintained", "about.point2": "Privacy-focused and data minimization", "about.point3": "iOS first, gradually expanding platforms",
+      "footer.privacy": "Privacy Policy", "footer.terms": "Terms of Service", "footer.contact": "Contact", "footer.copy": "© 2026 Dylan Studio. All rights reserved.",
+      "btn.appstore": "App Store", "btn.learnmore": "Learn More",
+      "tag.featured_ios": "Featured · iOS", "tag.coming_soon": "Coming Soon",
+      "placeholder.soon": "New Product Coming Soon"
     }
-  ];
+  };
 
-  /* ===== 全部产品（网格用） ===== */
-  const products = [
+  // 动态产品数据
+  const featuredData = [
     {
       name: "Dylan Health",
-      desc: "AI 扫描食物与药品，给出清晰易懂的健康建议。",
-      image: "assets/logo.png", // <--- 这里添加了 image 属性
-      tags: ["iOS", "订阅制"],
       link: "https://apps.apple.com/hk/app/dylan-health-food-scanner/id6805529950",
-      more: "App Store →",
-      external: true
+      image: "assets/health.png",
+      placeholder: "Product Screenshot",
+      zh: {
+        eyebrow: translations.zh["tag.featured_ios"], desc: "AI 扫描食物与药品，给出清晰易懂的健康建议。数据尽量留在本地，只做真正有用的分析。",
+        primary: translations.zh["btn.appstore"], secondary: translations.zh["btn.learnmore"]
+      },
+      en: {
+        eyebrow: translations.en["tag.featured_ios"], desc: "AI scans food and medicine, providing clear and easy-to-understand health advice. Data stays local whenever possible, focusing only on useful analysis.",
+        primary: translations.en["btn.appstore"], secondary: translations.en["btn.learnmore"]
+      }
+    },
+    
+    // ==========================================
+    // 以下为产品 B 和 C 的数据，暂时注释，留待后续开发
+    // ==========================================
+    /*
+    {
+      name: "Product B", link: "/products/b.html", image: "", placeholder: "Product Screenshot",
+      zh: {
+        eyebrow: translations.zh["tag.new_ios"], desc: "一句话说明这款产品解决什么问题，以及它最值得被使用的理由。",
+        primary: translations.zh["btn.viewdetails"], secondary: translations.zh["btn.moreproducts"]
+      },
+      en: {
+        eyebrow: translations.en["tag.new_ios"], desc: "Briefly explain what problem this product solves and why it's worth using.",
+        primary: translations.en["btn.viewdetails"], secondary: translations.en["btn.moreproducts"]
+      }
     },
     {
-      name: "产品 B",
-      desc: "一句话说明这款产品解决什么问题。",
-      icon: "◈",
-      tags: ["iOS", "免费"],
-      link: "/products/b.html",
-      more: "查看详情 →"
+      name: "Product C", link: "#", image: "", placeholder: "Coming Soon",
+      zh: {
+        eyebrow: translations.zh["tag.coming_web"], desc: "一句话说明这款产品解决什么问题，以及它最值得被使用的理由。",
+        primary: translations.zh["btn.learnprogress"], secondary: translations.zh["btn.moreproducts"]
+      },
+      en: {
+        eyebrow: translations.en["tag.coming_web"], desc: "Briefly explain what problem this product solves and why it's worth using.",
+        primary: translations.en["btn.learnprogress"], secondary: translations.en["btn.moreproducts"]
+      }
     },
+    */
+    // ==========================================
+
+    // 占位轮播图
     {
-      name: "产品 C",
-      desc: "一句话说明这款产品解决什么问题。",
-      icon: "▣",
-      tags: ["Web", "即将上线"],
+      name: "Coming Soon",
       link: "#",
-      more: "了解更多 →"
+      image: "",
+      isPlaceholder: true,
+      zh: {
+        eyebrow: translations.zh["tag.coming_soon"], desc: "我们正在打磨全新的产品，敬请期待。",
+        primary: "-", secondary: "-"
+      },
+      en: {
+        eyebrow: translations.en["tag.coming_soon"], desc: "We are crafting a brand new product. Stay tuned.",
+        primary: "-", secondary: "-"
+      }
     }
   ];
 
-  /* ===== 渲染轮播 ===== */
-  const track = document.getElementById("track");
-  const dotsWrap = document.getElementById("dots");
+  const productsData = [
+    {
+      name: "Dylan Health", icon: "✚", image: "assets/logo.png", link: "https://apps.apple.com/hk/app/dylan-health-food-scanner/id6805529950", external: true,
+      zh: { desc: "AI 扫描食物与药品，给出清晰易懂的健康建议。", tags: ["iOS", "订阅制"], more: "App Store →" },
+      en: { desc: "AI scans food and medicine, providing clear and easy-to-understand health advice.", tags: ["iOS", "Subscription"], more: "App Store →" }
+    },
+    
+    // ==========================================
+    // 以下为产品 B 和 C 的数据，暂时注释，留待后续开发
+    // ==========================================
+    /*
+    {
+      name: "Product B", icon: "◈", link: "/products/b.html",
+      zh: { desc: "一句话说明这款产品解决什么问题。", tags: ["iOS", "免费"], more: "查看详情 →" },
+      en: { desc: "Briefly explain what problem this product solves.", tags: ["iOS", "Free"], more: "View Details →" }
+    },
+    {
+      name: "Product C", icon: "▣", link: "#",
+      zh: { desc: "一句话说明这款产品解决什么问题。", tags: ["Web", "即将上线"], more: "了解更多 →" },
+      en: { desc: "Briefly explain what problem this product solves.", tags: ["Web", "Coming Soon"], more: "Learn More →" }
+    }
+    */
+    // ==========================================
 
-  track.innerHTML = featured.map(item => `
-    <div class="slide">
-      <div class="slide-text">
-        <div class="eyebrow">${item.eyebrow}</div>
-        <h2>${item.name}</h2>
-        <p>${item.desc}</p>
-        <div class="slide-actions">
-          <a class="btn btn-primary" href="${item.primary.href}"
-             ${item.primary.href.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
-            ${item.primary.label}
+    // 占位卡片
+    {
+      isPlaceholder: true,
+      zh: { name: "新产品即将上线" },
+      en: { name: "New Product Coming Soon" }
+    }
+  ];
+
+  // 状态变量
+  let currentLang = "zh";
+  let slideIndex = 0;
+  let slideTimer = null;
+
+  // 核心渲染函数
+  function renderApp() {
+    document.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (translations[currentLang][key]) {
+        el.textContent = translations[currentLang][key];
+      }
+    });
+
+    const switchBtn = document.getElementById("langSwitch");
+    if (switchBtn) switchBtn.textContent = currentLang === "zh" ? "EN" : "中文";
+
+    // 渲染轮播图
+    const track = document.getElementById("track");
+    const dotsWrap = document.getElementById("dots");
+    
+    if (track && dotsWrap) {
+      track.innerHTML = featuredData.map(item => {
+        const t = item[currentLang];
+        if (item.isPlaceholder) {
+          return `
+            <div class="slide">
+              <div class="slide-text">
+                <div class="eyebrow">${t.eyebrow}</div>
+                <h2>${item.name}</h2>
+                <p>${t.desc}</p>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card placeholder">
+                  <span>${translations[currentLang]["placeholder.soon"]}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="slide">
+            <div class="slide-text">
+              <div class="eyebrow">${t.eyebrow}</div>
+              <h2>${item.name}</h2>
+              <p>${t.desc}</p>
+              <div class="slide-actions">
+                <a class="btn btn-primary" href="${item.link}" ${item.link.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${t.primary}</a>
+                <a class="btn btn-ghost" href="#products">${t.secondary}</a>
+              </div>
+            </div>
+            <div class="slide-visual">
+              <div class="visual-card">
+                ${item.image ? `<img src="${item.image}" alt="${item.name}">` : item.placeholder}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      dotsWrap.innerHTML = featuredData.map((_, i) =>
+        `<button class="dot ${i === slideIndex ? "active" : ""}" data-index="${i}" aria-label="Slide ${i + 1}"></button>`
+      ).join("");
+
+      dotsWrap.querySelectorAll(".dot").forEach(d => {
+        d.addEventListener("click", () => {
+          slideIndex = Number(d.dataset.index);
+          updateSlidePosition();
+          startAutoSlide();
+        });
+      });
+
+      updateSlidePosition();
+    }
+
+    // 渲染产品网格
+    const grid = document.getElementById("productGrid");
+    if (grid) {
+      grid.innerHTML = productsData.map(p => {
+        if (p.isPlaceholder) {
+          return `
+            <div class="card placeholder">
+              <h3>${p[currentLang].name}</h3>
+            </div>
+          `;
+        }
+        const t = p[currentLang];
+        return `
+          <a class="card" href="${p.link}" ${p.external ? 'target="_blank" rel="noopener"' : ''}>
+            <div class="icon ${p.image ? 'has-image' : ''}">
+              ${p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon}
+            </div>
+            <h3>${p.name}</h3>
+            <p>${t.desc}</p>
+            <div class="tags">${t.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+            <div class="more">${t.more}</div>
           </a>
-          <a class="btn btn-ghost" href="${item.secondary.href}">${item.secondary.label}</a>
-        </div>
-      </div>
-      <div class="slide-visual">
-        <div class="visual-card">
-          ${item.image
-            ? `<img src="${item.image}" alt="${item.name}">`
-            : item.placeholder}
-        </div>
-      </div>
-    </div>
-  `).join("");
-
-  dotsWrap.innerHTML = featured.map((_, i) =>
-    `<button class="dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="第 ${i + 1} 张"></button>`
-  ).join("");
-
-  /* ===== 轮播逻辑 ===== */
-  const carousel = document.getElementById("carousel");
-  const dots = [...dotsWrap.querySelectorAll(".dot")];
-  let index = 0;
-  let timer = null;
-  const INTERVAL = 5000;
-
-  function goTo(i) {
-    index = (i + featured.length) % featured.length;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((d, k) => d.classList.toggle("active", k === index));
+        `;
+      }).join("");
+    }
   }
 
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
-
-  function startAuto() {
-    stopAuto();
-    timer = setInterval(next, INTERVAL);
+  // 轮播控制逻辑
+  function updateSlidePosition() {
+    const track = document.getElementById("track");
+    const dotsWrap = document.getElementById("dots");
+    if (track) track.style.transform = `translateX(-${slideIndex * 100}%)`;
+    if (dotsWrap) {
+      dotsWrap.querySelectorAll(".dot").forEach((d, k) => {
+        d.classList.toggle("active", k === slideIndex);
+      });
+    }
   }
-  function stopAuto() {
-    if (timer) { clearInterval(timer); timer = null; }
+
+  function nextSlide() {
+    slideIndex = (slideIndex + 1) % featuredData.length;
+    updateSlidePosition();
   }
 
-  document.getElementById("nextBtn").addEventListener("click", () => { next(); startAuto(); });
-  document.getElementById("prevBtn").addEventListener("click", () => { prev(); startAuto(); });
-  dots.forEach(d => d.addEventListener("click", () => {
-    goTo(Number(d.dataset.index));
-    startAuto();
-  }));
+  function prevSlide() {
+    slideIndex = (slideIndex - 1 + featuredData.length) % featuredData.length;
+    updateSlidePosition();
+  }
 
-  carousel.addEventListener("mouseenter", stopAuto);
-  carousel.addEventListener("mouseleave", startAuto);
+  function startAutoSlide() {
+    stopAutoSlide();
+    slideTimer = setInterval(nextSlide, 5000);
+  }
 
-  let touchX = null;
-  carousel.addEventListener("touchstart", e => {
-    touchX = e.touches[0].clientX;
-    stopAuto();
-  }, { passive: true });
-  carousel.addEventListener("touchend", e => {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 45) { dx < 0 ? next() : prev(); }
-    touchX = null;
-    startAuto();
-  }, { passive: true });
+  function stopAutoSlide() {
+    if (slideTimer) { clearInterval(slideTimer); slideTimer = null; }
+  }
 
-  document.addEventListener("visibilitychange", () => {
-    document.hidden ? stopAuto() : startAuto();
+  // 初始化
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      const savedLang = localStorage.getItem("dylanLang");
+      if (savedLang === "zh" || savedLang === "en") {
+        currentLang = savedLang;
+      }
+    } catch (e) {}
+
+    renderApp();
+
+    document.getElementById("langSwitch").addEventListener("click", () => {
+      currentLang = currentLang === "zh" ? "en" : "zh";
+      try { localStorage.setItem("dylanLang", currentLang); } catch(e){}
+      renderApp();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => { nextSlide(); startAutoSlide(); });
+    document.getElementById("prevBtn").addEventListener("click", () => { prevSlide(); startAutoSlide(); });
+
+    const carousel = document.getElementById("carousel");
+    if (carousel) {
+      carousel.addEventListener("mouseenter", stopAutoSlide);
+      carousel.addEventListener("mouseleave", startAutoSlide);
+
+      let touchX = null;
+      carousel.addEventListener("touchstart", e => {
+        touchX = e.touches[0].clientX;
+        stopAutoSlide();
+      }, { passive: true });
+      
+      carousel.addEventListener("touchend", e => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 45) { dx < 0 ? nextSlide() : prevSlide(); }
+        touchX = null;
+        startAutoSlide();
+      }, { passive: true });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      document.hidden ? stopAutoSlide() : startAutoSlide();
+    });
+
+    startAutoSlide();
   });
-
-  startAuto();
-
-  /* ===== 渲染产品网格 ===== */
-  const grid = document.getElementById("productGrid");
-  grid.innerHTML = products.map(p => `
-    <a class="card" href="${p.link}" ${p.external ? 'target="_blank" rel="noopener"' : ''}>
-      <!-- 这里根据是否配置了 image 动态渲染 -->
-      <div class="icon ${p.image ? 'has-image' : ''}">
-        ${p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon}
-      </div>
-      <h3>${p.name}</h3>
-      <p>${p.desc}</p>
-      <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
-      <div class="more">${p.more}</div>
-    </a>
-  `).join("");
 </script>
 </body>
 </html>
